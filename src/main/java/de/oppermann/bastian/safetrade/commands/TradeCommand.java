@@ -10,7 +10,6 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -258,16 +257,16 @@ public class TradeCommand implements CommandExecutor {
      * @return An array of text components.
      */
     private BaseComponent[] generateTextComponents() {
-        ComponentBuilder builder = new ComponentBuilder();
+        ComponentBuilder builder = new ComponentBuilder("");
         String howToMessage = Main.getInstance().getMessages().getString("how_to_accept_trade") + " ";
         String[] splitHowToMessage = howToMessage.split("\\{command}");
         for (int i = 0; i < splitHowToMessage.length - 1; i++) {
             builder.append(splitHowToMessage[i]).color(net.md_5.bungee.api.ChatColor.GREEN);
-            BaseComponent[] hoverComponents = new ComponentBuilder()
+            BaseComponent[] hoverComponents = new ComponentBuilder("")
                     .append(Main.getInstance().getMessages().getString("how_to_accept_trade_command_hover")).create();
             builder.append("/trade accept").color(net.md_5.bungee.api.ChatColor.GOLD)
                     .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/trade accept"))
-                    .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(hoverComponents)));
+                    .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverComponents));
         }
         builder.append(splitHowToMessage[splitHowToMessage.length - 1]).color(net.md_5.bungee.api.ChatColor.GREEN);
         return builder.create();
